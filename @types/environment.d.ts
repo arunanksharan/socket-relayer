@@ -11,8 +11,8 @@ declare global {
       HMAC_SECRET_KEY: string;
       RELAYERS_MASTER_SEED: string;
       ETH_ACCOUNT_PASS: string;
-      BICONOMY_OWNER_ADDRESS: string;
-      BICONOMY_OWNER_PRIVATE_KEY: string;
+      SOCKETTECH_OWNER_ADDRESS: string;
+      SOCKETTECH_OWNER_PRIVATE_KEY: string;
       RELAYER_QUEUE_EXCHANGE: string;
     }
   }

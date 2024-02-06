@@ -2,13 +2,11 @@ import { ethers } from 'ethers';
 
 export enum TransactionType {
   AA = 'AA',
-  SCW = 'SCW',
   CROSS_CHAIN = 'CROSS_CHAIN',
   FUNDING = 'FUNDING',
 }
 
 export enum TransactionMethodType {
-  SCW = 'eth_sendSmartContractWalletTransaction',
   AA = 'eth_sendUserOperation',
   CROSS_CHAIN = 'eth_sendCrossChainTransaction',
 }
@@ -21,13 +19,13 @@ export enum SocketEventType {
 }
 
 export type TransactionQueueMessageType = {
-  transactionId: string,
-  event: SocketEventType,
-  relayerManagerName: string,
-  transactionHash?: string,
-  previousTransactionHash?: string,
-  receipt?: ethers.providers.TransactionResponse,
-  error?: string,
+  transactionId: string;
+  event: SocketEventType;
+  relayerManagerName: string;
+  transactionHash?: string;
+  previousTransactionHash?: string;
+  receipt?: ethers.providers.TransactionResponse;
+  error?: string;
 };
 
 export enum TransactionStatus {
@@ -40,7 +38,6 @@ export enum TransactionStatus {
 
 export enum RelayerManagerType {
   AA = 0,
-  SCW = 0,
   CROSS_CHAIN = 1,
 }
 
@@ -49,10 +46,12 @@ export type AccessListItem = {
   storageKeys: string[];
 };
 
-export type NetworkBasedGasPriceType = {
-  maxPriorityFeePerGas: string;
-  maxFeePerGas: string;
-} | string;
+export type NetworkBasedGasPriceType =
+  | {
+      maxPriorityFeePerGas: string;
+      maxFeePerGas: string;
+    }
+  | string;
 
 export type EVMRawTransactionType = {
   from: string;
@@ -79,19 +78,8 @@ export type AATransactionMessageType = {
   transactionId: string;
   userOp?: UserOperationType;
   metaData?: {
-    dappAPIKey: string
-  }
-};
-
-export type SCWTransactionMessageType = {
-  type: string;
-  to: string;
-  data: string;
-  gasLimit: string;
-  chainId: number;
-  value: string;
-  transactionId: string;
-  walletAddress: string;
+    dappAPIKey: string;
+  };
 };
 
 type ResponseType = {
@@ -106,9 +94,7 @@ type ErrorType = {
 
 export type RelayServiceResponseType = ResponseType | ErrorType;
 
-export function isError<T>(
-  response: T | ErrorType,
-): response is ErrorType {
+export function isError<T>(response: T | ErrorType): response is ErrorType {
   return (response as ErrorType).error !== undefined;
 }
 
@@ -128,13 +114,13 @@ export type UserOperationType = {
 
 export type SymbolMapByChainIdType = {
   [key: number]: {
-    [key: string]: string,
-  }
+    [key: string]: string;
+  };
 };
 
 export type EntryPointMapType = {
   [chainId: number]: Array<{
-    address: string,
-    entryPointContract: ethers.Contract
-  }>
+    address: string;
+    entryPointContract: ethers.Contract;
+  }>;
 };
