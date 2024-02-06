@@ -1,3 +1,32 @@
+Assignment - 
+The objective of this exercise were as follows:
+1. Create a functional relayer
+2. Demonstrate understanding of the core components - Queue, Network Interaction, transaction Sending & Tracking
+
+The Biconomy relayer-node has been used as the base for this exercise.
+1. The relayer (originally) supports three types of transaction relays - i) ERC4337 Compliant - AA | ii) Biconomy Smart Contract Wallet related | iii) Cross Chain with integrations to Wormhole and Axelar
+
+Following are the core components in the entire flow:
+1. Server- It has a server which receives the transactions, identifies the transaction type and routes to the transactionHandler
+2. Transaction Sservice - with a transaction listener. It is used to create, execute and send a transaction and notify retry attempts.
+3. Network Service - connects to the blockchain via a Json rpcUrl
+4. Relayer Manager with load distribution algorithm based on strategy of sorting by balance and sorting by least pending count to allocate the transaction in queue to it
+5. Database Service - Redis for creating and maintaining a cache with information such as transactionId: retryCount | MongoDb for storing the transactions by Id and keeping their status and state and utilising it for resubmission based on transactionListener service
+6. Gas Price Service - managing, calculating and modifying gas limits when making retry attempts
+
+In addition, there were FeeOptions, Notification Manager and Smart Contract Wallet components - which were more relevant to Biconomoy's specific use case.
+These have been removed.
+
+The current submission allows for two of the flows:
+1. AA flow
+2. Cross Chain Transaction flow (Incomplete)
+
+Requirements:
+1. Need wssUrl & httpUrl to replace the existing static config mentions
+
+
+########################################################################################
+########################################################################################
 # Relayer Node
 
 The Relayer Node is responsible for validating transactions, paying their gas fees, and sending them to the network.
@@ -7,39 +36,6 @@ The Relayer infrastructure composes of multiple EOAs on each chain. Every relaye
 <div>
     <a href="https://opensource.org/licenses/GPL-3.0"><img src="https://img.shields.io/badge/license-GPL--v3-blueviolet"/></a>
 </div>
-
-For a general guideline of how to contribute, see our [contribution guidelines](./contributing.md)
-
-## Workflow best practices
-
-### Branching
-
-This project has two main branches, `main`, and `dev`. Then we do work based on branches off of `dev`.
-
-`main`: Production branch. This is the code that's live for the project.  
-`dev`: Staging branch. This represents what will be included in the next release.
-
-As we work on features, we branch off of the `dev` branch: `git checkout -b feature/new-nav-bar`.
-
-Working branches have the form `<type>/<feature>` where `type` is one of:
-
-- feat
-- fix
-- hotfix
-- chore
-- refactor
-
-### Commit Messages
-
-#### Basic
-
-`<type>(<scope>):<subject>`
-
-Your basic commit messages should have a **type**, **scope**, and **subject**:
-
-- _Type_ is one of the types listed above
-- _Scope_ is the area of the code that the commit changes
-- _Subject_ is a brief description of the work completed
 
 
 ## Local deployment 

@@ -27,7 +27,7 @@ export const STATUSES = {
   EXPECTATION_FAILED: 417,
   UNPROCESSABLE_ENTITY: 422,
   INTERNAL_SERVER_ERROR: 500,
-  BICONOMY_ERROR: 506,
+  SOCKETTECH_ERROR: 506,
   BAD_GATEWAY: 502,
   TOO_MANY_REQUESTS: 429,
   UNSUPPORTED_NETWORK: 507,
@@ -37,11 +37,12 @@ export const DB_ERRORS = {
   DUPLICATE_ENTRY: 11000,
 };
 
-export const sendResponse = (res: any, data: {} | null, status = STATUSES.SUCCESS) => {
-  res
-    .status(status)
-    .json(data)
-    .end();
+export const sendResponse = (
+  res: any,
+  data: {} | null,
+  status = STATUSES.SUCCESS
+) => {
+  res.status(status).json(data).end();
 };
 
 export const sendOne = curry((res: any, entity: any) => {
@@ -51,7 +52,11 @@ export const sendOne = curry((res: any, entity: any) => {
   return sendResponse(res, entity);
 });
 
-export const createResponseBody = (message: string, code: number, data?: string | undefined) => {
+export const createResponseBody = (
+  message: string,
+  code: number,
+  data?: string | undefined
+) => {
   const response: any = {};
   response.log = message;
   response.flag = code;
@@ -62,11 +67,14 @@ export const createResponseBody = (message: string, code: number, data?: string 
 export const sendUnsupportedAPIVersonResponse = (
   res: any,
   unsupportedVersion: any,
-  newSupportedVersion: any,
+  newSupportedVersion: any
 ) => {
   sendResponse(
     res,
-    createResponseBody(`Version ${unsupportedVersion} is not supported. Please switch to version ${newSupportedVersion}`, STATUSES.MOVED_PERMANENTLY),
-    STATUSES.MOVED_PERMANENTLY,
+    createResponseBody(
+      `Version ${unsupportedVersion} is not supported. Please switch to version ${newSupportedVersion}`,
+      STATUSES.MOVED_PERMANENTLY
+    ),
+    STATUSES.MOVED_PERMANENTLY
   );
 };
